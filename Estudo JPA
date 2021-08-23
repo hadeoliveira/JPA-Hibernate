@@ -1,0 +1,9 @@
+Destinado a links e Estudo geral
+
+@GeneratedValue -> buscar todos os tipos
+
+@OneToMany
+
+@ManyToMany
+
+@ManyToOne

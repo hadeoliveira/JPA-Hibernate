@@ -1,0 +1,14 @@
+br\com\sppvc\modelo\Categoria.class
+br\com\sppvc\modelo\ItemPedido.class
+br\com\sppvc\testes\CadastroDePedido.class
+br\com\sppvc\modelo\Cliente.class
+br\com\sppvc\dao\CategoriaDAO.class
+br\com\sppvc\modelo\Produto.class
+br\com\sppvc\dao\PedidoDAO.class
+br\com\sppvc\testes\PerformanceConsultas.class
+br\com\sppvc\modelo\Pedido.class
+br\com\sppvc\dao\ClienteDAO.class
+br\com\sppvc\vo\RelatorioDeVendasVO.class
+br\com\sppvc\testes\CadastroDeProduto.class
+br\com\sppvc\util\JPAUtil.class
+br\com\sppvc\dao\ProdutoDAO.class
