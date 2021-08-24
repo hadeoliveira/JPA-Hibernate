@@ -7,3 +7,8 @@ Destinado a links e Estudo geral
 @ManyToMany
 
 @ManyToOne
+
+@Inheritance:
+- TABLE_PER_CLASS
+- JOINED
+- SINGLE_TABLE

@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Table(name = "produtos") // Falando para JPA o nome correto da tabela
 @NamedQuery(name = "Produto.produtosPorCategoria",
         query = "SELECT p FROM Produto p WHERE p.categoria.nome = :nome")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Produto {
 
     @Id

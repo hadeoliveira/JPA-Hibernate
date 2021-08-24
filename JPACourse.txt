@@ -104,3 +104,13 @@ Explicação do que foi feito
 - o builder tem outro recurso, que é o and. Esse objeto é do tipo Predicate
 
 API CRITERIA é bem complexa e com código difícil de entender
+
+@Embeddable: Classe embutível. Quando eu quero separar da entidade principal colunas da tabela e falar que aquelas colunas da entidade são um outro tipo objeto.
+Na entidade, o atributo utiliza a anotação @Embeddded
+
+Mapeamento de herança na JPA
+Uma alternativa é a Single Table: Por mais que no Java tenhamos diferentes produtos, é tratado contra um grande tabelão, no qual todos os atributos ficam alocados na tabela. A desvantagem é que fica tudo na mesma tabela. A vantagem é que é mais performático.
+Para usar o Single Table, colocar uma anotação em cima da classe produto
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) -> lembrando que, as classes que fizeram herança, devem ter o @Entity da javax.persistence
+
+A outra estratégia é a JOINED. Você não tem uma tabela gigante, e sim uma tabela por classe. É utilizado chave estrangeira. A vantagem é a organização e a desvantagem é que, caso eu faça um select na tabela de Livro, ele fará um Join com a tabela de Produto, o que pode diminuir a performance da busca. Com a inserção, é feita na tabeça de produto e na de Livros, no qual o id do livro é uma chave estrangeira
