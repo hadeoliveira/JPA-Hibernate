@@ -53,8 +53,10 @@ Caso não precisamos de mais colunas para indicar o mapeamento bidirecional, pod
 Dicas JPQL
 Lembrar de ser o nome da entidade ao invés da tabela
 Para trazer um relatório, é possível trazer através de uma lista de um array de Object, para caso sejam objetos muito diferentes.
-No caso de ser instanciado um objeto vo, é utilizado um select new caminho da classe + nome da classe (...). Lembrando que, para usar select new, a classe VO deve possuir os construtores que serão retornados na query
+No caso de ser instanciado um objeto vo, é utilizado um select new caminho da classe + nome da classe (...). Lembrando que, para usar select new, a classe VO deve possuir os construtores que serão retornados na query. Um objeto VO significa um objeto de Value Object, que é uma classe com construtor, atributos, getters e setters. Deve ser select new porque o select só aceita se o objeto do caso fosse uma entidade.
+
 Named query: extrair as consultas da DAO na própria entidade. Para isso, em cima da entidade, usa-se uma anotação @NamedQuery(name = "nomeDaQuery", query = "QUERY AQUI") -> fica um pouco poluído
+entityManager.createNamedQuery("Produto.produtosPorCategoria", Produto.class) -> geralmente, a notação é: <de qual entidade vem>.<Nome da categoria>, objeto de retorno
 
 Quando criamos entidades relacionadas, é normal o JPQL fazer o relacionamento entre tabelas para fazer suas buscas
 Todo relacionamento ..ToOne, são carregados automaticamente, mesmo que não queremos buscar nenhuma informação do atributo relacionado.
@@ -71,8 +73,10 @@ Eu preciso de uma tabela intermediária chamada itens_pedido pois preciso saber 
 Dica de quando usar lista, é sempre iniciar a lista
 
 JPA tem dois comportamentos:
-EAGER -> toOne, padrão é carregar antes
+EAGER -> toOne, padrão é carregar antes. Carregamento antecipado.
 LAZY -> carregar tardio, só se for necessário alguma informação dessa lista
+
+...toMany nao é carregado automaticamente porque pode ser pesado para a memória, pois pode se tratar de lista. Portanto, só é acessado se for pedido.
 
 BOA PRÁTICA
 Todo relacionamento ..toOne, colocar
@@ -85,3 +89,18 @@ A ideia é o uso da QUERY PLANEJADA
         // nessa consulta é comportado como EAGER. Nessa consulta o cliente vem com o Pedido
 
 Cada entidade é mapeada para uma tabela no banco de dados. Desenvolver a entidade no Java e depois faça os devidos relacionamentos.
+
+Fazer consulta dinâmica, ou seja, fazer uma query definida com nome, preço e data apenas pelo(s) atributo(s) que for(em) passado(s), só pode ser feito com um emaranhado de if's. Por conta disso, a JPA possui a Criteria API
+
+A Criteria API nao utiliza JPQL. Precisamos do entity manager, que consegue criar um objeto Criteria para realizarmos a busca. Fazemos um getCriteriaBuilder()
+Explicação do que foi feito
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Produto> query = builder.createQuery(Produto.class);
+        Root<Produto> from = query.from(Produto.class);
+        Predicate filtros = builder.and();
+- É utilizado um objeto CriteriaBuilder para poder executar as operações com Criteria
+- Query vai disparar o select, from, where, etc. O from utiliza de onde vai ser disparado o from. Ou seja, estou dizendo "Criteria, o from é de Produto". SELECT p FROM Produto p
+- Se você setar o from, o select é setado automaticamente. O retorno do from é um objeto do tipo Root<Produto>
+- o builder tem outro recurso, que é o and. Esse objeto é do tipo Predicate
+
+API CRITERIA é bem complexa e com código difícil de entender
