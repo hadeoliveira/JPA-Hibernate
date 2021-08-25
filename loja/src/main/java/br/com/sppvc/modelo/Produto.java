@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity // Indicar que existe uma tabela no banco de dados representando essa classe
 @Table(name = "produtos") // Falando para JPA o nome correto da tabela
 @NamedQuery(name = "Produto.produtosPorCategoria",
-        query = "SELECT p FROM Produto p WHERE p.categoria.nome = :nome")
+        query = "SELECT p FROM Produto p WHERE p.categoria.id.nome = :nome")
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Produto {

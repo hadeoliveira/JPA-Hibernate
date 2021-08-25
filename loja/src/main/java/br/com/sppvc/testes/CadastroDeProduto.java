@@ -3,8 +3,11 @@ package br.com.sppvc.testes;
 import br.com.sppvc.dao.CategoriaDAO;
 import br.com.sppvc.dao.ProdutoDAO;
 import br.com.sppvc.modelo.Categoria;
+import br.com.sppvc.modelo.CategoriaId;
 import br.com.sppvc.modelo.Produto;
 import br.com.sppvc.util.JPAUtil;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -50,6 +53,9 @@ public class CadastroDeProduto {
         produtoDAO.cadastrar(celular);
 
         entManager.getTransaction().commit();
+
+        entManager.find(Categoria.class, new CategoriaId("CELULARES", "XPTO"));
+
         entManager.close();
     }
 }

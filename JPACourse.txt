@@ -114,3 +114,6 @@ Para usar o Single Table, colocar uma anotação em cima da classe produto
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) -> lembrando que, as classes que fizeram herança, devem ter o @Entity da javax.persistence
 
 A outra estratégia é a JOINED. Você não tem uma tabela gigante, e sim uma tabela por classe. É utilizado chave estrangeira. A vantagem é a organização e a desvantagem é que, caso eu faça um select na tabela de Livro, ele fará um Join com a tabela de Produto, o que pode diminuir a performance da busca. Com a inserção, é feita na tabeça de produto e na de Livros, no qual o id do livro é uma chave estrangeira
+
+Para mapear chave composta, delegamos os atributos para uma classe separada e utilizamos a anotação embutível (@Embeddable). Na classe anterior, colocar essa classe como atributo em conjunto com a anotação @EmbeddedId. A classe da chave composta precisa implementar a interface Serializable. Para fazer busca nessas chaves compostas, é feito, por exemplo:
+entityManager.find(<tipo-classe>.class, <um objeto instanciado da classe relativa a chave composta >)
